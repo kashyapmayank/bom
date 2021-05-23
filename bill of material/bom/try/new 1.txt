@@ -1,0 +1,11 @@
+echo '<select style="width: 600px; text-transform: uppercase; padding: 5px 5px;margin: 5px 0;box-sizing: border-box;border: 2px solid green;border-radius: 4px;font-size: 20px;" id="category" name="category" onchange="LoadMakes()" required>';								
+						
+							echo '<option value="All">ALL</option>';
+							$catNames=GetCategory();
+							for($i=0;$i<count($catNames["category"]);$i++)
+							{
+							  
+								echo '<option value="'.$catNames["category"][$i].'">'.$catNames["category"][$i].'></option>';
+							 
+							}
+							echo '</select>';

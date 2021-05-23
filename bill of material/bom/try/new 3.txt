@@ -1,0 +1,12 @@
+SELECT distinct description,part_no,category,sum(qty_unit)*10 FROM `instpcbtbl` A,bomtbl B WHERE A.inst_id=1 and B.pcb_id in (1,3) and A.pcb_id=B.pcb_id group by B.category,B.part_no
+
+
+select T.category,T.description,T.part_no,sum(T.qty_unit) from 
+instpcbtbl A,
+(Select pcb_id,category,description,part_no,make,qty_unit*5 as qty_unit from bomtbl where pcb_id=1 UNION 
+Select pcb_id,category,description,part_no,make,qty_unit*5 as qty_unit from bomtbl where pcb_id=3
+ UNION 
+Select pcb_id,category,description,part_no,make,qty_unit*5 as qty_unit from bomtbl where pcb_id=5) T 
+where A.inst_id=1 and A.pcb_id=T.pcb_id group by T.category,T.part_no
+
+SELECT `instpcbtbl`.pcb_id, pcb_desc FROM `instpcbtbl`,pcb_tbl WHERE `instpcbtbl`.inst_id=1 and `instpcbtbl`.pcb_id=pcb_tbl.pcb_id

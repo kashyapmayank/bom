@@ -1,0 +1,25 @@
+var appdata = JSON.stringify({"cat":category});
+	
+	$.ajax({
+	  type: "POST",
+	  dataType: "json",
+	  url: "getcategory.php",
+	  data: appdata,
+	  success: function(result) {
+		  html_data='<select style="width: 300px; text-transform: uppercase; padding: 5px 5px;margin: 5px 0;box-sizing: border-box;border: 2px solid green;border-radius: 4px;font-size: 20px;" id="category" name="category" onchange="LoadMakes(this.value)" required>';								
+						
+		html_data +='<option value="All">ALL</option>';
+			var obj= JSON.parse(JSON.stringify(result));	
+			for (var i=0;i<obj.make.length;i++)
+			{
+				html_data += '<option value="'.obj.make[i].'">'.obj.make[i].'</option>';
+			}
+		  html_data += '</select>';
+		  document.getElementById("make").innerHTML =html_data;
+		  
+		  
+	  }, error:function(result)
+		  {
+			 console.log(result);
+		 }
+	});

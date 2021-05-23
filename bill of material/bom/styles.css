@@ -1,0 +1,107 @@
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 100px;
+  counter-reset: Count-Value;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  background-color: #f5f5f5;
+}
+.a{
+	cursor:pointer;
+	}
+
+#searchbox {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+#searchbox td, #searchbox th {    
+    padding: 5px;
+	}
+
+#searchbox th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;    
+    color: black;
+	cursor: pointer;
+}	
+
+
+
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+#customers td, #customers th {
+    border: 2px solid #ddd;
+    padding: 5px;
+	cursor: default;
+}
+
+
+#customers tr:hover {background-color: yellow;}
+
+#customers th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: #669999;
+    color: black;
+	cursor: pointer;
+}
+
+#customers tr:nth-child(n+2) td:first-child:before {
+    counter-increment: Count-Value;
+    content: counter(Count-Value);
+}
+
+
+input { 
+    text-transform: uppercase;
+}
+
+::placeholder { /* Recent browsers */
+    text-transform: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+#download:link, #download:visited { 
+    color: #ffff00;
+	font-size: 20px;
+}
+
+a:link:active, a:visited:active { 
+    color: (internal value);
+}
+
+
+.active {
+    background-color: #4CAF50;
+}
+
+.break-word {
+		word-wrap: break-word;
+}

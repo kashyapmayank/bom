@@ -1,0 +1,100 @@
+@page {
+  size: landscape;
+}
+
+body {
+    counter-reset: Count-Value;
+}
+
+.a{
+	cursor:pointer;
+	}
+	
+#customersind {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customersind td, #customersind th {
+    border: 2px solid #ddd;
+    padding: 5px;
+	cursor: default;
+}
+
+#customersind tr:nth-child(even){background-color: #80e5ff;color:black;}
+#customersind tr:nth-child(odd){background-color: white;color:black;}
+
+#customersind tr:hover {background-color: yellow;}
+
+#customersind th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: #669999;
+    color: black;
+	cursor: pointer;
+}
+#customersind tr:nth-child(n+1) td:first-child:before
+	{
+		counter-increment: Count-Value;   
+		content:counter(Count-Value);
+	}	
+#grpChkBox {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+#grpChkBox th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: lime;
+    color: black;
+	cursor: pointer;
+}
+
+input { 
+    text-transform: uppercase;
+}
+
+::placeholder { /* Recent browsers */
+    text-transform: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+#download:link, #download:visited { 
+    color: #ffff00;
+	font-size: 20px;
+}
+
+a:link:active, a:visited:active { 
+    color: (internal value);
+}
+
+
+.active {
+    background-color: #4CAF50;
+}
+
+.break-word {
+		word-wrap: break-word;
+}
+.footer {
+    background-color: transparent;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    position:fixed;
+    bottom:0;
+    width:15%;
+	text-align: left;
+}

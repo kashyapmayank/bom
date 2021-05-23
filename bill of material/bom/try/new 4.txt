@@ -1,0 +1,265 @@
+<html>
+<body>
+
+<h1><center>Bill of Material</center></h1>
+
+<form action="/action_page.php">
+  <label for="monitor"><h3>Choose a monitor:</h3></label>
+  <select name="monitor" id="monitor">
+    <option value="acc">Accident Monitor</option>
+    <option value="aer">Aerosol Monitor</option>
+    <option value="eirg">Ext. IRG Monitor</option>
+    <option value="arm">Area Radiation Monitor</option>
+    <option value="iodine">Iodine Monitor</option>
+    <option value="lem">LIQUID EFFICIENT MONITOR</option>
+    <option value="n16">N16 & GROSS GAMMA MONITOR</option>
+    <option value="irg">IRG MONITOR</option>
+    <option value="aerm">AUTOMATED ENVIROMENT RADIATION MONITOR</option>
+  </select>
+  <br><br>
+  
+	<style>
+  
+</div>
+  <input type="submit" value="Submit">
+</form>
+
+
+</body>
+</html>
+
+
+/* var url =  "getpcb.php?inst_id="+inst_id;
+			try{
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						
+						var resp=xhttp.responseText;
+						var obj= JSON.parse(this.responseText);	
+						
+					
+						
+						for (var i=0;i<obj.pcb_id.length;i++)
+						{
+							html_data +='<div class="form-group col">';
+							html_data +='<label for="pcb'+obj.pcb_id[i]+'">'+obj.pcb_desc[i] +'</label>';
+							html_data +='<input type="number" class="form-control" style="text-transform: uppercase;"  id="pcb'+obj.pcb_id[i]+'" name="pcb'+obj.pcb_id[i]+'">';
+							html_data +='</div>';
+						}
+						 
+		  document.getElementById("pcb").innerHTML =html_data;
+		  
+		   
+						
+						//alert(obj.make.length);
+						
+					}
+				};
+				xhttp.open("GET", url, true);
+				xhttp.send();
+			}
+			catch(err){
+				//console.log(err);
+			} */
+			
+		function LoadMakes(category)
+{
+	alert(category);
+	
+	var appdata = JSON.stringify({"cat":category});
+	
+	
+			var url =  "getcategory.php?cat="+category;
+			try{
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						
+						var resp=xhttp.responseText;
+						var obj= JSON.parse(this.responseText);	
+						
+						html_data='<select style="width: 300px; text-transform: uppercase; padding: 5px 5px;margin: 5px 0;box-sizing: border-box;border: 2px solid green;border-radius: 4px;font-size: 20px;" id="item_make" name="item_make"  required>';								
+						
+						html_data +='<option value="All">ALL</option>';
+						
+						for (var i=0;i<obj.make.length;i++)
+						{
+							html_data += '<option value="'+obj.make[i]+'">'+obj.make[i]+'</option>';
+						}
+						 html_data += '</select>';
+		  document.getElementById("make").innerHTML =html_data;
+		  
+		   
+						
+						//alert(obj.make.length);
+						
+					}
+				};
+				xhttp.open("GET", url, true);
+				xhttp.send();
+			}
+			catch(err){
+				//console.log(err);
+			}
+}
+	
+function GetData()
+{
+	var acc_qty=document.getElementById("acc").value;
+	//alert(acc_qty);
+	var acc			=document.getElementById("acc").value;
+	var aer			=document.getElementById("aer").value;
+	var eirg  		=document.getElementById("eirg").value;
+	var arm			=document.getElementById("arm").value;
+	var im			=document.getElementById("im").value;
+	var lem			=document.getElementById("lem").value;
+	var n16			=document.getElementById("n16").value;
+	var irg			=document.getElementById("irg").value;
+	var aem			=document.getElementById("aem").value;
+	var category	=document.getElementById("category").value;
+	var make		=document.getElementById("item_make").value;
+	
+}
+
+function periodic_update()
+{
+	var datastr="";
+	//$('#deletesuccess').show();
+	var acc 	=document.getElementById("acc").value;
+	var aer 	=document.getElementById("aer").value;
+	var eirg 	=document.getElementById("eirg").value;
+	var arm  	=document.getElementById("arm").value;
+	var im   	=document.getElementById("im").value;
+	var lem 	=document.getElementById("lem").value;
+	var n16 	=document.getElementById("n16").value;
+	var irg 	=document.getElementById("irg").value;
+	var aem 	=document.getElementById("aem").value;
+	
+	var category= document.getElementById("category").value;
+	var make= document.getElementById("make").value;
+	var datastr="acc="+acc+"&aer="+aer+"&eirg="+eirg+"&arm="+arm+"&im="+im+"&lem="+lem"&n16="+n16"&irg="+irg+"&aem="+aem+"&category="+category+"&make="+make;
+	
+	var http_url = "getqtydata.php?"+datastr;
+	try{
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				// Typical action to be performed when the document is ready:
+				//console.log(xhttp.responseText);
+				var html_data="";
+				html_data+= " <table id='grpChkBox' class='table table-lite table-sm table-bordered w-auto'>	    ";	
+					
+					html_data += " <th onClick=''><label style='cursor:pointer; padding:5px;' title='Click to Hide/Show'><input type='checkbox' style='cursor:pointer;' title='Click to Hide/Show' name='DESCRIPTION'/>DESCRIPTION</label></th>        ";
+					html_data += " <th onClick=''><label style='cursor:pointer; padding:5px;' title='Click to Hide/Show'><input type='checkbox' style='cursor:pointer;' title='Click to Hide/Show' name='PARTNO'/>PART NO</label></th>        ";
+					html_data += " <th onClick=''><label style='cursor:pointer; padding:5px;' title='Click to Hide/Show'><input type='checkbox' style='cursor:pointer;' title='Click to Hide/Show' name='MAKE'/>MAKE</label></th>        ";
+					html_data += " <th onClick=''><label style='cursor:pointer; padding:5px;' title='Click to Hide/Show'><input type='checkbox' style='cursor:pointer;' title='Click to Hide/Show' name='PACKAGE'/>PACKAGE</label></th>        ";
+					html_data += " <th onClick=''><label style='cursor:pointer; padding:5px;' title='Click to Hide/Show'><input type='checkbox' style='cursor:pointer;' title='Click to Hide/Show' name='QTYUNIT'/>QTY UNIT</label></th>        ";
+					html_data += " <th onClick=''><label style='cursor:pointer; padding:5px;' title='Click to Hide/Show'><input type='checkbox' style='cursor:pointer;' title='Click to Hide/Show' name='TOTALQTY'/>TOTAL QTY</label></th>    ";
+				html_data +=" </table><br>	";
+				var obj= JSON.parse(this.responseText);	
+				
+				html_data +="<table id='customers' class='table table-striped table-bordered'><tbody><tr>";
+					
+					html_data += " <th onClick='' class='DESCRIPTION'/>DESCRIPTION</th>   ";
+					html_data += " <th onClick='' class='PARTNO'/>PART NO</th>            ";
+					html_data += " <th onClick='' class='MAKE'/>MAKE</th>                 ";
+					html_data += " <th onClick='' class='PACKAGE'/>PACKAGE</th>           ";
+					html_data += " <th onClick='' class='QTYUNIT'/>QTY UNIT</th>          ";
+					html_data += " <th onClick='' class='TOTALQTY'/>TOTAL QTY</th>        ";
+				html_data += "</tr>";
+				
+				for (var i=0;i<obj.slno.length;i++)
+				{
+					
+					html_data += "<td align='left'>"+obj.description[i]+"</td>";
+					html_data += "<td align='left'>"+obj.part_no[i]+"</td>";
+					html_data += "<td align='left'>"+obj.make[i]+"</td>";
+					html_data += "<td align='left'>"+obj.package[i]+"</td>";
+					html_data += "<td align='right'>"+obj.qty_unit[i]+"</td>";
+					html_data += "<td align='right'>"+obj.total_qty[i]+"</td>";
+					html_data += "</tr>";
+					
+				}
+				
+				html_data += '</tbody>';
+				html_data += '<tr>                                     ';
+				html_data += '	<th align="right" ></th>               ';
+				html_data += '	<th align="right" ></th>               ';
+				html_data += '	<th align="right" ></th>               ';
+				html_data += '	<th align="right" ><b>Total:</b></td>  ';
+				html_data += '	<th align="right" title="" onmouseenter="updateTitle(this)" id="table8Tot1"></td>';        
+				html_data += '	<th align="right" title="" onmouseenter="updateTitle(this)" id="table8Tot2"></td>';
+				html_data += '</tr>';
+				html_data += "</table><br>";
+				html_data += "<button class='btn btn-md btn-outline-info' type='button' onClick='printRepData()' style='font-size: 14px;font-weight: bold;'>Print</button>";
+				//console.log(html_data);
+				document.getElementById("bomdata").innerHTML =html_data;
+				//$('#deletesuccess').hide();
+				$('#printdata1').css({display: 'block'});
+				$('#printdata2').css({display: 'block'});
+				
+				var totRowIndex = tf_Tag(tf_Id('customers'), "tr").length;
+				var table2_Props = {
+					
+					//filters_row_index: 1,
+					sort: true,  
+					 sort_config: {  
+						sort_types:['String','String','String','String','String','String','US','US','US','US','US']  
+					}, 
+					
+					col_0	: "none",
+					col_1	: "select",
+					col_2	: "select",
+					col_3	: "select",
+					col_4	: "select",
+					col_5	: "select",
+					col_6	: "select",
+					col_7	: "select",
+					
+					display_all_text: "All",
+					//sort_select: true,
+					
+					//rows_counter: true,
+					col_operation: {
+						id: ["table8Tot1", "table8Tot2"],
+						col: [4,5],
+						operation: ["sum", "sum"],
+						write_method: ["innerHTML", "innerHTML"],
+						exclude_row: [totRowIndex],
+						decimal_precision: [2, 2]
+					},						
+					rows_always_visible: [totRowIndex]
+				};
+				var tf2 = setFilterGrid("customers", table2_Props);
+				$(function () 
+				{
+					var $chk = $("#grpChkBox input:checkbox"); 
+					var $tbl = $("#customers");
+					var $tblhead = $("#customers th");
+
+					$chk.prop('checked', true); 
+
+					$chk.click(function () {
+						var colToHide = $tblhead.filter("." + $(this).attr("name"));
+						var index = $(colToHide).index();
+						$tbl.find('tr :nth-child(' + (index + 1) + ')').toggle();
+					});
+					
+					$("#search").on("keyup", function() {
+					var value = $(this).val().toLowerCase();
+					$("#searchbody tr").filter(function() {
+					  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				  });
+				});
+			}
+		};
+		xhttp.open("GET", http_url, true);
+		xhttp.send();
+	}
+	
+	catch(err){
+		console.log(err);
+	}
+}

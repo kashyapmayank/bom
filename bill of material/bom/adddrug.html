@@ -1,0 +1,172 @@
+<html>
+<?php include 'functions.php';
+session_start();//session starts here
+if(!isset($_SESSION['druguserid']))
+	{
+		echo "<meta http-equiv='refresh' content='0;url=../index.php'>";
+	}
+
+?>
+<head lang="en">
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="../../img/tejulogo.png" />
+	<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="styles.css">
+	<script src="jquery.min.js"></script>
+	<script src="propper.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+    <title>Drug Report</title>
+</head>
+<script>
+jQuery(document).bind("keyup keydown", function(e){
+    if(e.ctrlKey && e.keyCode == 80){
+		printData();
+        return false;
+    }
+});
+document.oncontextmenu = function() {
+                return false;
+            };
+			
+window.addEventListener("keydown",function (e) {
+    if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) { 
+        e.preventDefault();
+		document.getElementById("search").focus();		
+    }
+});
+</script>
+
+<body>
+	<nav class="navbar navbar-expand-sm navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="#"><b>Add Component</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
+            <ul class="navbar-nav mr-auto justify-content-left">	
+                <li class="nav-item" >
+                    <a class="nav-link" href="drugdata.php"><button class="btn btn-outline-success">Home</button></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<br>
+	<div class="container justify-content-between">
+		<div class="row justify-content-center">
+			<div class="col-md-6 justify-content-between">
+				<form role="form" method="post" action="adddrug.php"  style="padding:10px;">			
+				<center><b><h3 id='addsuccess' name='addsuccess' style='color:green;' value=""></h3></b></center>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="brand">inst_id</label>
+							<input type="text" class="form-control" style="text-transform: uppercase;"  id="brand" name="brand" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="type">pcb_id</label>
+							<input type="text" class="form-control" style="text-transform: uppercase;"  id="type" name="type" required>	
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="molecule">item_no</label>
+							<input type="text" class="form-control" style="text-transform: uppercase;"  id="molecule" name="molecule" required>	
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="distributor">description</label>
+							<input type="text" class="form-control" style="text-transform: uppercase;"  id="distributor" name="distributor" required>	
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="invoice">Invoice</label>
+							<input type="text" class="form-control" style="text-transform: uppercase;"  id="invoice" name="invoice" required>	
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="rcvddate">Received Date</label>
+						  <input type='date' class="form-control" style='text-transform: uppercase;'  name='rcvddate' id='rcvddate' min='2010-01-01'   required></td>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="mfgdate">Manufactured Date</label>
+							<input type="date" class="form-control" style="text-transform: uppercase;"  id="mfgdate" name="mfgdate" required>	
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="expdate">Expiry Date</label>
+						  <input type='date' class="form-control" style='text-transform: uppercase;'  name='expdate' id='expdate' min='2010-01-01'   required></td>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="qty">Qty</label>
+							<input type="number" class="form-control" min="0" style="text-transform: uppercase;"  id="qty" name="qty" required>	
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="freeqty">Free Qty</label>
+							<input type="number" class="form-control" min="0" style="text-transform: uppercase;"  id="freeqty" name="freeqty" required>	
+						</div>
+					</div>					
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="mrp">MRP</label>
+							<input type="number" class="form-control" min="0" style="text-transform: uppercase;"  id="mrp" name="mrp" step=".01" required>	
+						</div>
+					
+					
+						<div class="form-group col-md-6">
+							<label for="purmrp">Purchase Price</label>
+							<input type="number" class="form-control" min="0" style="text-transform: uppercase;"  id="purmrp" name="purmrp" step=".01" required>	
+						</div>
+					</div>
+					<center>
+						<br><input type="submit" id="add" name="add" class="btn btn-primary"></input>
+					</center>
+				</form>
+			</div>
+		</div>
+	</div>  
+</body>
+<?php 
+	if(isset($_POST['add']))
+	{
+		$brand			=$_POST['brand'];
+		$type			=$_POST['type'];
+		$molecule		=$_POST['molecule'];
+		$distributor	=$_POST['distributor'];
+		$rcvddate		=$_POST['rcvddate'];
+		$mfgdate		=$_POST['mfgdate'];
+		$expdate		=$_POST['expdate'];
+		$qty			=$_POST['qty'];
+		$freeqty		=$_POST['freeqty'];
+		$invoice		=$_POST['invoice'];
+		$mrp			=$_POST['mrp'];
+		$purmrp			=$_POST['purmrp'];
+		
+		$conn=ConnectDB();
+		$sqlquery = "INSERT INTO drugtbl (brand, type, molecule, distributor, rcvddate, mfgdate, expdate, qty, freeqty, invoice, mrp, purprice) 
+							VALUES ('".strtoupper($brand)."', '".strtoupper($type)."', '".strtoupper($molecule)."', '".strtoupper($distributor)."', '".$rcvddate."', '".$mfgdate."', '".$expdate."', ".$qty.",".$freeqty.",'".strtoupper($invoice)."',".$mrp.",".$purmrp.")"; 
+				//echo $sqlquery;
+		if ($conn->query($sqlquery) === TRUE) 
+		{
+			echo "<script type=\"text/javascript\"> 
+			  $(document).ready( function() {
+				document.getElementById('addsuccess').innerHTML = 'Added Successfully';
+				$('#addsuccess').delay(5000).fadeOut();
+			  }); 
+			</script>";
+		} 
+		else 
+		{
+			echo "Error: " . $sqlquery . "<br>" . $conn->error;
+		}
+		$conn->close();
+		
+	}
+?>
+</html>
